@@ -25,18 +25,24 @@ export default function Confirmation() {
 
     const name = searchParams.get('name');
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-4">Thank you, {name}!</h1>
-      {imageUrl && (
-        <img
-          src={decodeURIComponent(imageUrl)}
-          alt="Your Photo"
-          className="w-64 h-auto mb-4 rounded-lg"
-        />
-      )}
-      <p className="text-xl mb-4">{message}</p>
-      <p className="text-gray-600">Redirecting to the main page...</p>
-    </div>
-  );
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4">
+        <div className="w-full max-w-md text-center">
+          <h1 className="text-3xl font-bold mb-6 text-primary">
+            Thank you, {decodeURIComponent(name)}!
+          </h1>
+          {imageUrl && (
+            <div className="mb-6">
+              <img
+                src={decodeURIComponent(imageUrl)}
+                alt="Your Photo"
+                className="w-64 h-64 object-cover rounded-lg mx-auto shadow-md"
+              />
+            </div>
+          )}
+          <p className="text-xl mb-6 text-gray-700">{message}</p>
+          <p className="text-gray-500">Redirecting to the main page...</p>
+        </div>
+      </div>
+    );
 }
