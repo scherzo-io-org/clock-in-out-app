@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
-import BackButton from '@/components/BackButton';
+import { EmployeeContext } from '@/app/EmployeeContext';
+
 
 export default function CameraCapture() {
   const videoRef = useRef(null);
@@ -12,34 +13,27 @@ export default function CameraCapture() {
   const { id } = params;
   const action = searchParams.get('action'); // 'in' or 'out'
 
-  const [employee, setEmployee] = useState(null);
+  const { employeeData, setEmployeeData } = useContext(EmployeeContext);
+  // const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Fetch employee details
-    const fetchEmployee = async () => {
-      const resEmployee = await fetch(`/api/get-employee?id=${id}`);
-      const dataEmployee = await resEmployee.json();
-      if (!dataEmployee.success) {
-        alert('Employee not found.');
-        router.push('/');
-        return;
-      }
-      setEmployee(dataEmployee.employee);
-    };
-    fetchEmployee();
-
     // Access camera
-    navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: 'user' } })
-      .then((stream) => {
-        videoRef.current.srcObject = stream;
-      })
-      .catch((err) => {
-        alert('Camera access denied or unavailable.');
-        router.push('/');
-      });
-  }, [id, router]);
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ video: { facingMode: 'user' } })
+        .then((stream) => {
+          videoRef.current.srcObject = stream;
+        })
+        .catch((err) => {
+          alert('Camera access denied or unavailable.');
+          router.push('/');
+        });
+    } else {
+      alert('Camera is not supported on this device or browser.');
+      router.push('/');
+    }
+  }, [id, router, employeeData, setEmployeeData]);
 
   const handleCapture = async () => {
     setLoading(true);
@@ -61,7 +55,7 @@ export default function CameraCapture() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, action, imageUrl }),
+        body: JSON.stringify({ id : employeeData.LoginID, action, imageUrl }),
       });
   
       const data = await response.json();
@@ -75,15 +69,15 @@ export default function CameraCapture() {
         router.push(
           `/employee/${id}/confirmation?action=${action}&imageUrl=${encodeURIComponent(
             imageUrl
-          )}&name=${encodeURIComponent(employee.first_name)}`
+          )}&name=${encodeURIComponent(employeeData.FirstName)}`
         );
       } else {
-        alert('An error occurred. Please try again.');
+        alert('An error occurred 1. Please try again.');
         setLoading(false);
       }
     } catch (error) {
       console.error('Error during handleCapture:', error);
-      alert('An error occurred. Please try again.');
+      alert('An error occurred 2. Please try again.');
       setLoading(false);
     }
   };
@@ -114,7 +108,7 @@ export default function CameraCapture() {
   };
   
 
-  if (!employee) {
+  if (!employeeData) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 

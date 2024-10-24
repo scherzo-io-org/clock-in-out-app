@@ -10,7 +10,7 @@ export async function GET(request) {
     const result = await pool
       .request()
       .input('id_num', sql.VarChar, id)
-      .query(`SELECT * FROM EmployeeList WHERE id_num = @id_num`);
+      .query(`SELECT LoginID , FirstName , LastName FROM stafflogininfo WHERE status='active' and RIGHT(SocialSecurityNumber, 4) = @id_num`);
 
     if (result.recordset.length > 0) {
       return NextResponse.json({ success: true, employee: result.recordset[0] });

@@ -1,11 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import { EmployeeContext } from './EmployeeContext';
+
 
 export default function EmployeeIDEntry() {
   const [employeeID, setEmployeeID] = useState('');
   const router = useRouter();
+  const { setEmployeeData } = useContext(EmployeeContext);
+
 
   const handleNumClick = (num) => {
     setEmployeeID((prev) => prev + num);
@@ -20,9 +24,10 @@ export default function EmployeeIDEntry() {
     const response = await fetch(`/api/validate-employee?id=${employeeID}`);
     const data = await response.json();
     if (data.valid) {
+      setEmployeeData(data.employee);
       router.push(`/employee/${employeeID}`);
     } else {
-      alert('Invalid Employee ID. Please try again.');
+      alert(data.reason);
       setEmployeeID('');
     }
   };

@@ -11,7 +11,7 @@ export async function POST(request) {
       .input('id_num', sql.VarChar, id)
       .input('type', sql.VarChar, action)
       .input('image_url', sql.NVarChar, imageUrl)
-      .query(`INSERT INTO clockinsouts (employee_id, type, timestamp_in, image_url)
+      .query(`INSERT INTO clockinsouts (REP, type, timestamp_in, image_url)
       VALUES (@id_num, @type, GETDATE(), @image_url)`);
 
     return NextResponse.json({ success: true });
