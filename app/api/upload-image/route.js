@@ -27,7 +27,7 @@ export async function POST(request) {
     const filename = `${uuidv4()}.${extension}`;
 
     // Define the directory to save the images
-    const imageDirectory = '/mnt/images' //path.join(process.cwd(), 'public', 'uploads');
+    const imageDirectory = '/mnt/clock-in-out-images' //path.join(process.cwd(), 'public', 'uploads');
 
     // Ensure the directory exists
     fs.mkdirSync(imageDirectory, { recursive: true });

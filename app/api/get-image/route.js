@@ -7,7 +7,7 @@ export async function GET(request) {
   const filename = searchParams.get('filename');
 
   try {
-    const imagePath = path.join('/mnt/images', filename);
+    const imagePath = path.join('/mnt/clock-in-out-images', filename);
 
     if (!fs.existsSync(imagePath)) {
       return NextResponse.json({ error: 'Image not found' }, { status: 404 });
