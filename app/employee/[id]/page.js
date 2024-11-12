@@ -70,8 +70,8 @@ export default function EmployeeWelcome() {
         {lastAction ? (
           <p className="mb-6 text-lg text-gray-700">
             Last action: <span className="font-semibold">Clock-{lastAction.type}</span> at{' '}
-            {new Date(lastAction.timestamp_in).toLocaleString()}
-          </p>
+            {new Date(new Date(lastAction.timestamp_in).getTime() + 5 * 3600000).toLocaleString()}
+            </p>
         ) : (
           <p className="mb-6 text-lg text-gray-700">No previous actions recorded.</p>
         )}
