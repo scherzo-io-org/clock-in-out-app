@@ -43,6 +43,11 @@ export default function CameraCapture() {
     canvas.width = videoRef.current.videoWidth;
     canvas.height = videoRef.current.videoHeight;
     const context = canvas.getContext('2d');
+
+    // Flip the context horizontally
+    context.translate(canvas.width, 0);
+    context.scale(-1, 1);
+
     context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
     const imageData = canvas.toDataURL('image/png');
 
@@ -124,6 +129,7 @@ export default function CameraCapture() {
             ref={videoRef}
             autoPlay
             className="absolute top-0 left-0 w-full h-full object-cover"
+            style={{ transform: 'scaleX(-1)' }}
           ></video>
         </div>
         {loading ? (
