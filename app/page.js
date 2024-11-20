@@ -4,12 +4,10 @@ import { useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { EmployeeContext } from './EmployeeContext';
 
-
 export default function EmployeeIDEntry() {
   const [employeeID, setEmployeeID] = useState('');
   const router = useRouter();
   const { setEmployeeData } = useContext(EmployeeContext);
-
 
   const handleNumClick = (num) => {
     console.log('Number clicked:', num);

@@ -3,8 +3,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { EmployeeContext } from '@/app/EmployeeContext';
-// import Link from 'next/link'; // Import Link for navigation
-import BackButton from '@/components/BackButton';
+import HomeButton from '@/components/HomeButton';
 
 export default function EmployeeWelcome() {
   const router = useRouter();
@@ -12,7 +11,6 @@ export default function EmployeeWelcome() {
   const { id } = params;
 
   const { employeeData, setEmployeeData } = useContext(EmployeeContext);
-  //const [employee, setEmployee] = useState(null);
 
   const [lastAction, setLastAction] = useState(null);
   const [nextAction, setNextAction] = useState('in');
@@ -61,7 +59,7 @@ export default function EmployeeWelcome() {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-background p-4">
       {/* Back Button */}
-      <BackButton href="/" />
+      <HomeButton/>
 
       <div className="w-full max-w-md text-center">
         <h1 className="text-3xl font-bold mb-6 text-primary">
@@ -73,7 +71,7 @@ export default function EmployeeWelcome() {
             {new Date(new Date(lastAction.timestamp_in).getTime() + 5 * 3600000).toLocaleString()}
             </p>
         ) : (
-          <p className="mb-6 text-lg text-gray-700">No previous actions recorded.</p>
+          <p className="mb-6 text-lg text-gray-700">No previous actions recorded for today.</p>
         )}
         <button
           onClick={handleActionClick}

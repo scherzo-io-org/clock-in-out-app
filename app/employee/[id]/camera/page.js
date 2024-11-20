@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState, useContext } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { EmployeeContext } from '@/app/EmployeeContext';
+import HomeButton from '@/components/HomeButton';
+
 
 
 export default function CameraCapture() {
@@ -119,7 +121,7 @@ export default function CameraCapture() {
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-background p-4">
-
+      <HomeButton/>
       <div className="w-full max-w-md text-center">
         <h1 className="text-2xl font-bold mb-6 text-primary">
           {action === 'in' ? 'Clock In' : 'Clock Out'}
