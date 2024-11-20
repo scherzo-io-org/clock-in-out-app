@@ -12,10 +12,12 @@ export default function EmployeeIDEntry() {
 
 
   const handleNumClick = (num) => {
+    console.log('Number clicked:', num);
     setEmployeeID((prev) => prev + num);
   };
 
   const handleBackspace = () => {
+    console.log('Clear clicked');
     setEmployeeID((prev) => '');
   };
 
