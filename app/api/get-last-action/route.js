@@ -10,7 +10,7 @@ export async function GET(request) {
     const result = await pool
       .request()
       .input('rep', sql.VarChar, rep)
-      .query(`SELECT TOP 1 * FROM clockinsouts WHERE REP = @rep AND timestamp_in >= CAST(GETDATE() AS DATE) ORDER BY timestamp_in DESC`);
+      .query(`SELECT TOP 1 * FROM clockinsouts WHERE REP = @rep AND AND timestamp_in >= DATEADD(HOUR, 2, CONVERT(DATETIME, CONVERT(VARCHAR(8), GETDATE(), 112))) ORDER BY timestamp_in DESC`);
 
     if (result.recordset.length > 0) {
       return NextResponse.json({ success: true, lastAction: result.recordset[0] });
